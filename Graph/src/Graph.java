@@ -158,7 +158,11 @@ public class Graph {
 		
 	}
 	
+	/*
+	
 	private void display_DFS(GraphEdgeNode node, StringBuilder sb){
+		
+		System.out.println("in the function display_DFS("+node.getValue()+",sb)");
 		
 		sb.append(node.getValue()).append(" ");
 		node.setVisited(true);
@@ -177,10 +181,54 @@ public class Graph {
 			
 			display_DFS(nodelist.get(temp),sb);
 			
+			
 			//用临时变量来达到指针移动的效果。
 			currentnode = currentnode.getNextedge();
 		}
 	}
+	
+	*/
+	
+	private void display_DFS(GraphEdgeNode node, StringBuilder sb){
+		
+		System.out.println("in the function display_DFS("+node.getValue()+",sb)");
+		
+		int index = nodelist.indexOf(node);
+		
+		//输出根
+		if(!nodelist.get(index).isVisited()){
+			sb.append(nodelist.get(index).getValue()).append(" ");
+			nodelist.get(index).setVisited(true);
+			System.out.println("put the node "+node.getValue()+" into StringBuilder and make the node "+node.getValue()+" visited.");
+		}
+		
+		//define a GraphEdgeNode currentnode to temporarily store node
+		GraphEdgeNode currentnode = new GraphEdgeNode(nodelist.get(index).getValue(),nodelist.get(index).getNextedge());		
+		System.out.println("开始while循环遍历");
+		
+		int temp = nodelist.indexOf(nodelist.get(index).getNextedge());
+		
+		//循环
+		while (currentnode.getNextedge()!=null&&!nodelist.get(temp).isVisited()){
+			
+			
+			System.out.println("开始调用display_DFS("+currentnode.getNextedge().getValue()+",sb)");
+			display_DFS(currentnode.getNextedge(),sb);
+			System.out.println("结束调用display_DFS("+currentnode.getNextedge().getValue()+",sb)");
+			
+			
+			//用临时变量来达到指针移动的效果。
+//			currentnode.setValue(currentnode.getNextedge().getValue());
+//			currentnode.setNextedge(currentnode.getNextedge().getNextedge());
+			
+			//用临时变量来达到指针移动的效果。
+			currentnode = currentnode.getNextedge();
+			
+			temp = nodelist.indexOf(currentnode.getNextedge());
+		}
+	}
+	
+	
 	
 	
 	//constructor function
