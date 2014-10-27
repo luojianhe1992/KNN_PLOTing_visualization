@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class KnnNodeList {
 	
 	private ArrayList<KnnNode> nodeList;
-	String group_label;
+	private String group_label;
 	
 	
 	public KnnNodeList() {

@@ -1,8 +1,13 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import javax.swing.JFrame;
+
+import org.math.plot.Plot2DPanel;
 
 
 
@@ -14,7 +19,11 @@ public class Classifier {
 		
 		System.out.println("Starting");
 		
+		
+		//use KnnNodeList to store the training raw data
 		KnnNodeList raw_list = new KnnNodeList();
+		
+		//the source file path way
 		String path_trainingdata = "data/IrisTrain.csv";
 		
 		//invoke the static function parse in class KnnReader to read the IrisFull.csv file into Arraylist<KnnNode>
@@ -40,6 +49,52 @@ public class Classifier {
 		
 		//use the KnnNodeList raw_list to store the raw data
 		raw_list.setNodeList(list);
+		
+		/*
+		
+		System.out.println(":):):):):):):):):):):):):):):):):):):)");
+		
+		
+		double [] x = new double [list.size()];
+		
+		double [] y = new double [list.size()];
+		
+		for(int i=0;i<list.size();i++){
+			x[i] = list.get(i).getFeature()[0];
+					}
+		
+		for(int j=0;j<list.size();j++){
+			y[j] = list.get(j).getFeature()[2];
+		}
+		
+		System.out.print("x=");
+		for(int i=0;i<list.size();i++){
+			System.out.print(x[i]+" ");
+		}
+		
+		System.out.println();
+		
+		System.out.print("y=");
+		for(int j=0;j<list.size();j++){
+			System.out.print(y[j]+" ");
+		}
+		
+		
+		Plot2DPanel plot_2D = new Plot2DPanel();
+		
+		//print out the scatter plot
+		plot_2D.addScatterPlot("scatter",x,y);
+		
+		JFrame frame = new JFrame("jianhe luo panel"); 
+		
+		frame.setContentPane(plot_2D);
+		
+		frame.setVisible(true);
+		
+		
+		System.out.println(":):):):):):):):):):):):):):):):):):):)");
+		
+		*/
 		
 		//printout the raw data
 		System.out.println("the raw training data are:"+'\n'+raw_list);
@@ -75,6 +130,123 @@ public class Classifier {
 			System.out.println(nl[i]);
 		}
 		
+
+		
+		//print out the scatter of the three type in red, green and blue
+		/*
+		
+		double[] x1 = new double[nl[0].getNodeList().size()];
+		double[] y1 = new double[nl[0].getNodeList().size()];
+		for(int i=0;i<nl[0].getNodeList().size();i++){
+			x1[i] = nl[0].getNodeList().get(i).getFeature()[0];
+		}
+		for(int j=0;j<nl[0].getNodeList().size();j++){
+			y1[j] = nl[0].getNodeList().get(j).getFeature()[1];
+		}
+		
+		
+		double[] x2 = new double[nl[1].getNodeList().size()];
+		double[] y2 = new double[nl[1].getNodeList().size()];
+		for(int i=0;i<nl[1].getNodeList().size();i++){
+			x2[i] = nl[1].getNodeList().get(i).getFeature()[0];
+		}
+		for(int j=0;j<nl[1].getNodeList().size();j++){
+			y2[j] = nl[1].getNodeList().get(j).getFeature()[1];
+		}
+		
+		
+		double[] x3 = new double[nl[2].getNodeList().size()];
+		double[] y3 = new double[nl[2].getNodeList().size()];
+		for(int i=0;i<nl[2].getNodeList().size();i++){
+			x3[i] = nl[2].getNodeList().get(i).getFeature()[0];
+		}
+		for(int j=0;j<nl[2].getNodeList().size();j++){
+			y3[j] = nl[2].getNodeList().get(j).getFeature()[1];
+		}
+		
+		Color color1 = new Color(255,0,0);
+		Color color2 = new Color(0,255,0);
+		Color color3 = new Color(0,0,255);
+		
+		Plot2DPanel plot_2D = new Plot2DPanel();
+		
+		//print out the scatter plot
+		plot_2D.addScatterPlot("scatter1",color1,x1,y1);
+		
+		//print out the scatter plot
+		plot_2D.addScatterPlot("scatter2",color2,x2,y2);
+				
+		//print out the scatter plot
+		plot_2D.addScatterPlot("scatter3",color3,x3,y3);
+		
+		
+		JFrame frame = new JFrame("jianhe luo panel"); 
+		frame.setContentPane(plot_2D);
+		frame.setVisible(true);
+		
+		*/	
+		
+				
+		//print out the three type and use a node(5.7,3.5) to connect with all of them
+		
+		System.out.println(":):):):):):):):):):):):):):):):):):):):):):):):)");
+		
+		double [] node = new double [2];
+		
+		node[0] = 5.7;
+		node[1] = 3.5;
+		
+		Color color_red = new Color(255,0,0);
+		Color color_green =new Color(0,255,0);
+		Color color_blue = new Color(0,0,255);
+		
+		Plot2DPanel plot2d = new Plot2DPanel();
+		
+		
+		
+		double [][] a = new double [nl[0].getNodeList().size()][2];
+		double [][] b = new double [nl[1].getNodeList().size()][2];
+		double [][] c = new double [nl[2].getNodeList().size()][2];
+		
+		for(int i = 0;i<nl[0].getNodeList().size();i++){
+			a[i][0] = nl[0].getNodeList().get(i).getFeature()[0];
+			a[i][1] = nl[0].getNodeList().get(i).getFeature()[1];
+		}
+		
+		for(int i = 0;i<nl[1].getNodeList().size();i++){
+			b[i][0] = nl[1].getNodeList().get(i).getFeature()[0];
+			b[i][1] = nl[1].getNodeList().get(i).getFeature()[1];
+		}
+		
+		for(int i = 0;i<nl[2].getNodeList().size();i++){
+			c[i][0] = nl[2].getNodeList().get(i).getFeature()[0];
+			c[i][1] = nl[2].getNodeList().get(i).getFeature()[1];
+		}
+		
+		for (int i=0;i<nl[0].getNodeList().size();i++){
+			plot2d.addLinePlot("class1",color_red,node,a[i]);
+		}
+		
+		for (int i=0;i<nl[1].getNodeList().size();i++){
+			plot2d.addLinePlot("class1",color_green,node,b[i]);
+		}
+		
+		for (int i=0;i<nl[2].getNodeList().size();i++){
+			plot2d.addLinePlot("class1",color_blue,node,c[i]);
+		}
+		
+		JFrame frame = new JFrame("jianhel plot panel");
+		frame.setContentPane(plot2d);
+		frame.setVisible(true);
+		
+		System.out.println(":):):):):):):):):):):):):):):):):):):):):):):):)");
+		
+		
+		
+		
+		
+		
+				
 		//I suppose that the default k is 5
 		int default_k = 5;
 		
