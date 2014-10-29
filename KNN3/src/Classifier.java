@@ -147,7 +147,10 @@ public class Classifier {
 		
 		*/
 		
-		Plot.plot_2d_thenearestpoint(new_nodelist.getNodeList().get(1), nl, label_list, 0, 1, 10);
+//		Plot.plot_2d_thenearestpoint(new_nodelist.getNodeList().get(1), nl, label_list, 0, 1, 10);
+		
+		
+		Plot.plot_3d_thenearestpoint(new_nodelist.getNodeList().get(2), nl, label_list, 0, 1, 3, 10);
 		
 		
 		
@@ -237,10 +240,10 @@ public class Classifier {
 			}	
 			number_testingdata++;	
 			
-			System.out.println("ending");
+			
 		}
 		
-		
+		System.out.println("ending");
 		
 		
 		

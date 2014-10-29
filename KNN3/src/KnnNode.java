@@ -32,6 +32,7 @@ public class KnnNode {
 		this.feature = feature;
 	}
 	
+	//distances between all features
 	public double distCal(KnnNode node){
 		double dist;
 		double sum = 0;
@@ -45,6 +46,7 @@ public class KnnNode {
 		return dist;
 	}
 	
+	//distances between two features
 	public double distCal(KnnNode node, int feature1, int feature2){
 		double dist;
 		double sum = 0;
@@ -56,6 +58,22 @@ public class KnnNode {
 		
 		return dist;
 	}
+	
+	//distances between three features
+	public double disCal(KnnNode node, int feature1,int feature2, int feature3){
+		double dist;
+		double sum = 0;
+		
+		sum = sum + (feature[feature1]-node.feature[feature1])*(feature[feature1]-node.feature[feature1]);
+		sum = sum + (feature[feature2]-node.feature[feature2])*(feature[feature2]-node.feature[feature2]);
+		sum = sum + (feature[feature3]-node.feature[feature3])*(feature[feature3]-node.feature[feature3]);
+		
+		dist = Math.sqrt(sum);
+		
+		return dist;
+	}
+	
+	
 	
 	@Override
 	public String toString() {
