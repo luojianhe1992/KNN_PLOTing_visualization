@@ -126,6 +126,7 @@ public class Classifier {
 //		Plot.plot_3d_inthreecolor(nl, 0, 1, 2);
 		
 		
+		/*
 		
 		KnnNodeList test_nodelist = new KnnNodeList();
 		test_nodelist.getNodeList().add(new_nodelist.getNodeList().get(0));
@@ -138,6 +139,16 @@ public class Classifier {
 		Plot.plot_3d(new_nodelist.getNodeList().get(0), nl, 0, 1, 2);
 		
 		Plot.plot_3d(test_nodelist, nl, 0, 1, 2);
+		
+		
+		*/
+		
+		Plot.plot_2d_thenearestpoint(new_nodelist.getNodeList().get(1), nl, label_list, 0, 1, 10);
+		
+		
+		
+		
+		
 		
 		
 		

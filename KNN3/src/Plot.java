@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JFrame;
 
@@ -61,7 +62,7 @@ public class Plot {
 	}
 	
 	//print out the scatter of the three type in red, green and blue
-	public static void plot_2d_inthreecolor(KnnNodeList [] nl, int feature1, int feature2){
+	public static Plot2DPanel plot_2d_inthreecolor(KnnNodeList [] nl, int feature1, int feature2){
 		
 		double[] x1 = new double[nl[0].getNodeList().size()];
 		double[] y1 = new double[nl[0].getNodeList().size()];
@@ -111,6 +112,8 @@ public class Plot {
 		JFrame frame = new JFrame("jianhe luo panel"); 
 		frame.setContentPane(plot_2D);
 		frame.setVisible(true);
+		
+		return plot_2D;
 	}
 	
 	
@@ -224,9 +227,206 @@ public class Plot {
 		frame.setContentPane(plot2d);
 		frame.setVisible(true);
 		
-	
-	
 	}
+	
+	
+	
+	
+	
+	//given a node and can print out the nearest k nodes.
+	public static void plot_2d_thenearestpoint(KnnNode node, KnnNodeList[] nl,ArrayList<String> label_list,int feature1,int feature2, int nearest){
+	
+		
+		Color color_red = new Color(255,0,0);
+		Color color_green =new Color(0,255,0);
+		Color color_blue = new Color(0,0,255);
+		
+		
+		double [] node_array = new double [2];
+		node_array[0] = node.getFeature()[feature1];
+		node_array[1] = node.getFeature()[feature2];
+		
+		System.out.println("the new node is:"+node_array[0]+" "+node_array[1]);
+		
+		ArrayList<ArrayList<PlotNode>> plotnodelist = new ArrayList<ArrayList<PlotNode>>();
+		
+		for (int i=0;i<nl.length;i++){
+			plotnodelist.add(new ArrayList<PlotNode>());
+		}
+		
+		for(int i=0;i<nl.length;i++){ 
+			for (int j=0;j<nl[i].getNodeList().size();j++){
+				plotnodelist.get(i).add(new PlotNode());
+				
+				//set value
+				plotnodelist.get(i).get(j).setLabel(nl[i].getNodeList().get(j).getLabel());
+				plotnodelist.get(i).get(j).setFeature(nl[i].getNodeList().get(j).getFeature());
+				plotnodelist.get(i).get(j).setDistances(nl[i].getNodeList().get(j).distCal(node));
+			}
+			
+		}
+		
+		
+		System.out.println("the plotnodelist is:"+plotnodelist);
+		
+		
+		
+		ArrayList<PlotNode> dist_compare = new ArrayList<PlotNode>();
+		
+		
+		
+		for (int i=0;i<nl.length;i++){
+			dist_compare.addAll(plotnodelist.get(i));
+		}
+		
+//		Collections.sort(dist_compare);
+		
+		//sorting process
+		for(int i=0;i<dist_compare.size();i++){
+			for(int j=i;j<dist_compare.size();j++){
+				if(dist_compare.get(j).getDistances()<dist_compare.get(i).getDistances()){
+					PlotNode temp = new PlotNode();
+					temp.setLabel(dist_compare.get(i).getLabel());
+					temp.setDistances(dist_compare.get(i).getDistances());
+					temp.setFeature(dist_compare.get(i).getFeature());
+					
+					dist_compare.set(i, dist_compare.get(j));
+					
+					dist_compare.set(j, temp);
+				}
+			}
+		}
+		
+		
+		
+		System.out.println("the dist_compare:"+dist_compare);
+		
+		ArrayList<PlotNode> nearestdistnode = new ArrayList<PlotNode> ();
+		
+		for (int i=0;i<nearest;i++){
+			nearestdistnode.add(dist_compare.get(i));
+		}
+		
+		System.out.println("the nearestdistnode is:"+nearestdistnode);
+		
+		int label1_num = 0;
+		int label2_num = 0;
+		int label3_num = 0;
+		
+		System.out.println("the label_list.get(0) is"+label_list.get(0));
+		System.out.println("the label_list.get(1) is"+label_list.get(1));
+		System.out.println("the label_list.get(2) is"+label_list.get(2));
+		
+		System.out.println("nearestdistnode.get(i).getLabel() is:"+nearestdistnode.get(0).getLabel());
+		
+		
+		for (int i=0;i<nearest;i++){
+			if(nearestdistnode.get(i).getLabel()==label_list.get(0)){
+				label1_num++;
+			}
+			if(nearestdistnode.get(i).getLabel().equals(label_list.get(1))){
+				label2_num++;
+			}
+			if(nearestdistnode.get(i).getLabel().equals(label_list.get(2))){
+				label3_num++;
+			}
+		}
+		
+		
+		System.out.println("label1_num:"+label1_num);
+		System.out.println("label2_num:"+label2_num);
+		System.out.println("label3_num:"+label3_num);
+		
+		double [][] a = new double [label1_num][2];
+		double [][] b = new double [label2_num][2];
+		double [][] c = new double [label3_num][2];
+		
+		
+		for (int i=0,num1=0;i<nearest;i++){
+			if (nearestdistnode.get(i).getLabel().equals(label_list.get(0))){
+				a [num1][0] = nearestdistnode.get(i).getFeature()[feature1];
+				a [num1][1] = nearestdistnode.get(i).getFeature()[feature2];
+				num1++;
+			}
+		}
+		
+		for (int i=0,num2=0;i<nearest;i++){
+			if (nearestdistnode.get(i).getLabel().equals(label_list.get(1))){
+				b [num2][0] = nearestdistnode.get(i).getFeature()[feature1];
+				b [num2][1] = nearestdistnode.get(i).getFeature()[feature2];
+				num2++;
+			}
+		}
+		
+		for (int i=0,num3=0;i<nearest;i++){
+			if (nearestdistnode.get(i).getLabel().equals(label_list.get(2))){
+				c [num3][0] = nearestdistnode.get(i).getFeature()[feature1];
+				c [num3][1] = nearestdistnode.get(i).getFeature()[feature2];
+				num3++;
+			}
+		}
+		
+		System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+		System.out.println("the node is:"+node);
+		System.out.println("the a is:"+a);
+		System.out.println("the b is:"+b);
+		System.out.println("the c is:"+c);
+		
+		
+//		for(int i=0;i<label1_num;i++){
+//			System.out.print(a[i][0]+" "+a[i][1]);
+//			System.out.println();
+//		}
+//		
+//		for(int i=0;i<label2_num;i++){
+//			System.out.print(b[i][0]+" "+b[i][1]);
+//			System.out.println();
+//		}
+//		
+		for(int i=0;i<label3_num;i++){
+			System.out.print(c[i][0]+" "+c[i][1]);
+			System.out.println();
+		}
+		
+		System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+		
+		Plot2DPanel plot2d = new Plot2DPanel();
+		
+		
+		//plot all the training data
+		plot2d = Plot.plot_2d_inthreecolor(nl, feature1, feature2);
+		
+		
+		//plot the line
+		for (int i=0;i<label1_num;i++){
+			plot2d.addLinePlot("line", color_red, node_array, a[i]);
+		}
+		
+		for (int i=0;i<label2_num;i++){
+			plot2d.addLinePlot("line", color_green, node_array, b[i]);
+		}
+		
+		for (int i=0;i<label3_num;i++){
+			plot2d.addLinePlot("line", color_blue, node_array, c[i]);
+		}
+		
+		JFrame frame = new JFrame();
+		frame.setContentPane(plot2d);
+		frame.setVisible(true);
+		
+
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
