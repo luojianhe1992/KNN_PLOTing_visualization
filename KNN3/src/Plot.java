@@ -11,10 +11,8 @@ import org.math.plot.Plot3DPanel;
 public class Plot {
 	
 	//the function to print out the scatter points of the training data.
-	public static void plot_2d (ArrayList<KnnNode> list, int feature1, int feature2 ){
+	public static Plot2DPanel plot_2d (ArrayList<KnnNode> list, int feature1, int feature2 ){
 		
-		
-		System.out.println(":):):):):):):):):):):):):):):):):):):)");
 		
 		System.out.println("invoke the function to plot the scatter points of the training data.");
 		
@@ -42,7 +40,6 @@ public class Plot {
 			System.out.print(y[j]+" ");
 		}
 		
-		
 		Plot2DPanel plot_2D = new Plot2DPanel();
 		
 		//print out the scatter plot
@@ -54,11 +51,7 @@ public class Plot {
 		
 		frame.setVisible(true);
 		
-		
-		System.out.println(":):):):):):):):):):):):):):):):):):):)");
-		
-		
-		
+		return plot_2D;
 	}
 	
 	//print out the scatter of the three type in red, green and blue
@@ -109,7 +102,8 @@ public class Plot {
 		plot_2D.addScatterPlot("scatter3",color3,x3,y3);
 		
 		
-		JFrame frame = new JFrame("jianhe luo panel"); 
+		
+		JFrame frame = new JFrame("jianhe luo panel2"); 
 		frame.setContentPane(plot_2D);
 		frame.setVisible(true);
 		
@@ -118,7 +112,7 @@ public class Plot {
 	
 	
 	//print out the three type and use a node to connect with all of them
-	public static void plot_2d(KnnNode node, KnnNodeList [] nl,  int feature1, int feature2){
+	public static Plot2DPanel plot_2d(KnnNode node, KnnNodeList [] nl,  int feature1, int feature2){
 			
 		//use array to store the features of the node.
 		double [] node_array = new double [2];
@@ -166,11 +160,13 @@ public class Plot {
 		JFrame frame = new JFrame("jianhel plot panel");
 		frame.setContentPane(plot2d);
 		frame.setVisible(true);
+		
+		return plot2d;
 	}
 	
 	
 	//2d connect line, three type, all the testing data
-	public static void plot_2d(KnnNodeList test_nl, KnnNodeList[] nl,int feature1,int feature2){
+	public static Plot2DPanel plot_2d(KnnNodeList test_nl, KnnNodeList[] nl,int feature1,int feature2){
 		
 		Color color_red = new Color(255,0,0);
 		Color color_green =new Color(0,255,0);
@@ -226,6 +222,7 @@ public class Plot {
 		JFrame frame = new JFrame("jianhel plot panel");
 		frame.setContentPane(plot2d);
 		frame.setVisible(true);
+		return plot2d;
 		
 	}
 	
@@ -234,20 +231,19 @@ public class Plot {
 	
 	
 	//given a node and can print out the nearest k nodes.
-	public static void plot_2d_thenearestpoint(KnnNode node, KnnNodeList[] nl,ArrayList<String> label_list,int feature1,int feature2, int nearest){
+	public static Plot2DPanel plot_2d_thenearestpoint(KnnNode node, KnnNodeList[] nl,ArrayList<String> label_list,int feature1,int feature2, int nearest){
 	
-		
+		//define the color
 		Color color_red = new Color(255,0,0);
 		Color color_green =new Color(0,255,0);
 		Color color_blue = new Color(0,0,255);
 		
-		
+		//use a array to store the node point
 		double [] node_array = new double [2];
 		node_array[0] = node.getFeature()[feature1];
 		node_array[1] = node.getFeature()[feature2];
 		
-		System.out.println("the new node is:"+node_array[0]+" "+node_array[1]);
-		
+		//define a ArrayList<ArrayList<PlotNode>> to store the training data's plotnode
 		ArrayList<ArrayList<PlotNode>> plotnodelist = new ArrayList<ArrayList<PlotNode>>();
 		
 		for (int i=0;i<nl.length;i++){
@@ -261,25 +257,20 @@ public class Plot {
 				//set value
 				plotnodelist.get(i).get(j).setLabel(nl[i].getNodeList().get(j).getLabel());
 				plotnodelist.get(i).get(j).setFeature(nl[i].getNodeList().get(j).getFeature());
-				plotnodelist.get(i).get(j).setDistances(nl[i].getNodeList().get(j).distCal(node));
+				
+				//calculate the distance
+				plotnodelist.get(i).get(j).setDistances(nl[i].getNodeList().get(j).distCal(node,feature1,feature2));
 			}
-			
 		}
 		
-		
-		System.out.println("the plotnodelist is:"+plotnodelist);
-		
-		
-		
+		//define a ArrayList<PlotNode> to store the whole plotnode to sort
 		ArrayList<PlotNode> dist_compare = new ArrayList<PlotNode>();
-		
-		
 		
 		for (int i=0;i<nl.length;i++){
 			dist_compare.addAll(plotnodelist.get(i));
 		}
 		
-//		Collections.sort(dist_compare);
+//		Collections.sort(dist_compare);//问问鄢神为什么不能实现
 		
 		//sorting process
 		for(int i=0;i<dist_compare.size();i++){
@@ -297,29 +288,18 @@ public class Plot {
 			}
 		}
 		
-		
-		
-		System.out.println("the dist_compare:"+dist_compare);
-		
+		//define a ArrayList<PlotNode> to just store the first k plot node
 		ArrayList<PlotNode> nearestdistnode = new ArrayList<PlotNode> ();
 		
 		for (int i=0;i<nearest;i++){
 			nearestdistnode.add(dist_compare.get(i));
 		}
 		
-		System.out.println("the nearestdistnode is:"+nearestdistnode);
 		
 		int label1_num = 0;
 		int label2_num = 0;
 		int label3_num = 0;
-		
-		System.out.println("the label_list.get(0) is"+label_list.get(0));
-		System.out.println("the label_list.get(1) is"+label_list.get(1));
-		System.out.println("the label_list.get(2) is"+label_list.get(2));
-		
-		System.out.println("nearestdistnode.get(i).getLabel() is:"+nearestdistnode.get(0).getLabel());
-		
-		
+
 		for (int i=0;i<nearest;i++){
 			if(nearestdistnode.get(i).getLabel()==label_list.get(0)){
 				label1_num++;
@@ -331,11 +311,6 @@ public class Plot {
 				label3_num++;
 			}
 		}
-		
-		
-		System.out.println("label1_num:"+label1_num);
-		System.out.println("label2_num:"+label2_num);
-		System.out.println("label3_num:"+label3_num);
 		
 		double [][] a = new double [label1_num][2];
 		double [][] b = new double [label2_num][2];
@@ -366,34 +341,10 @@ public class Plot {
 			}
 		}
 		
-		System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-		System.out.println("the node is:"+node);
-		System.out.println("the a is:"+a);
-		System.out.println("the b is:"+b);
-		System.out.println("the c is:"+c);
-		
-		
-//		for(int i=0;i<label1_num;i++){
-//			System.out.print(a[i][0]+" "+a[i][1]);
-//			System.out.println();
-//		}
-//		
-//		for(int i=0;i<label2_num;i++){
-//			System.out.print(b[i][0]+" "+b[i][1]);
-//			System.out.println();
-//		}
-//		
-		for(int i=0;i<label3_num;i++){
-			System.out.print(c[i][0]+" "+c[i][1]);
-			System.out.println();
-		}
-		
-		System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-		
+		//define a new Plot2DPanel
 		Plot2DPanel plot2d = new Plot2DPanel();
 		
-		
-		//plot all the training data
+		//invoke the function to plot all the training data
 		plot2d = Plot.plot_2d_inthreecolor(nl, feature1, feature2);
 		
 		
@@ -414,26 +365,12 @@ public class Plot {
 		frame.setContentPane(plot2d);
 		frame.setVisible(true);
 		
-
-		
+		return plot2d;
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//print out the scatter of the three type in red, green and blue in three dimension panel
-	public static void plot_3d(ArrayList<KnnNode> list, int feature1, int feature2, int feature3){
+	//print out the scatter of training data
+	public static Plot3DPanel plot_3d(ArrayList<KnnNode> list, int feature1, int feature2, int feature3){
 		//use three arrays to store the three features of the node list.
 		double [] a = new double [list.size()];
 		double [] b = new double [list.size()];
@@ -451,10 +388,12 @@ public class Plot {
 		JFrame frame = new JFrame("jianhel plot panel");
 		frame.setContentPane(plot3d);
 		frame.setVisible(true);
+		
+		return plot3d;
 	}
 	
-	//print out the scatter points in three types and 
-	public static void plot_3d_inthreecolor(KnnNodeList [] nl, int feature1, int feature2, int feature3){
+	//print out the scatter points in three types
+	public static Plot3DPanel plot_3d_inthreecolor(KnnNodeList [] nl, int feature1, int feature2, int feature3){
 		
 		Color color_red = new Color(255,0,0);
 		Color color_green =new Color(0,255,0);
@@ -500,14 +439,13 @@ public class Plot {
 		JFrame frame = new JFrame();
 		frame.setContentPane(plot3d);
 		frame.setVisible(true);
-		                           
-		                        		   
+		
+		return plot3d;                  		   
 	}
 	
 	
-	
 	//connect line, three type, one node
-	public static void plot_3d(KnnNode node, KnnNodeList[] nl, int feature1, int feature2, int feature3){
+	public static Plot3DPanel plot_3d(KnnNode node, KnnNodeList[] nl, int feature1, int feature2, int feature3){
 		
 		Color color_red = new Color(255,0,0);
 		Color color_green =new Color(0,255,0);
@@ -550,13 +488,12 @@ public class Plot {
 		frame.setContentPane(plot3d);
 		frame.setVisible(true);
 
+		return plot3d;
 	
 	}
-	
-	
-	
+
 	//3d connect line, three type, all the testing data
-	public static void plot_3d(KnnNodeList test_nl, KnnNodeList[] nl,int feature1,int feature2, int feature3){
+	public static Plot3DPanel plot_3d(KnnNodeList test_nl, KnnNodeList[] nl,int feature1,int feature2, int feature3){
 			
 		Color color_red = new Color(255,0,0);
 		Color color_green =new Color(0,255,0);
@@ -614,6 +551,8 @@ public class Plot {
 		JFrame frame = new JFrame();
 		frame.setContentPane(plot3d);
 		frame.setVisible(true);
+		
+		return plot3d;
 			
 	}
 	

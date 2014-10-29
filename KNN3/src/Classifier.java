@@ -35,7 +35,7 @@ public class Classifier {
 			keySet.add(n.getLabel());
 		
 		//print out the size of the labels in training data
-		System.out.println("there are "+keySet.size()+" types of label.");
+//		System.out.println("there are "+keySet.size()+" types of label.");
 		
 		//use the ArrayList<String> to store the labels instead of HashSet
 		ArrayList<String> label_list = new ArrayList<String>();
@@ -45,13 +45,13 @@ public class Classifier {
 		}
 		
 		//print out the labels
-		System.out.println("the label list is:"+label_list);
+//		System.out.println("the label list is:"+label_list);
 		
 		//use the KnnNodeList raw_list to store the raw data
 		raw_list.setNodeList(list);
 		
 		//printout the raw data
-		System.out.println("the raw training data are:"+'\n'+raw_list);
+//		System.out.println("the raw training data are:"+'\n'+raw_list);
 		
 		
 		//According to the size of the labels, define several node list to respectively store the KnnNodes according to its label
@@ -79,10 +79,10 @@ public class Classifier {
 			
 		}
 		//print out several node lists
-		System.out.println("print out "+label_list.size()+" node lists");
-		for (int i=0;i<label_list.size();i++){
-			System.out.println(nl[i]);
-		}
+//		System.out.println("print out "+label_list.size()+" node lists");
+//		for (int i=0;i<label_list.size();i++){
+//			System.out.println(nl[i]);
+//		}
 	
 		
 		
@@ -98,9 +98,14 @@ public class Classifier {
 		
 		
 		//print out the testing data
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println("the testing data are:"+'\n'+new_nodelist);
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+//		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+//		System.out.println("the testing data are:"+'\n'+new_nodelist);
+//		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		
+		
+		
+		
+		
 		
 		
 		
@@ -110,36 +115,35 @@ public class Classifier {
 		
 //		//2d panel, not classified
 //		Plot.plot_2d(list, 0, 1);
-//				
+				
+		
 //		//2d panel, has been classified
 //		Plot.plot_2d_inthreecolor(nl, 0, 1);
-//				
+		
+		
 //		//2d panel, has been classified and connected to one node.
 //		Plot.plot_2d(new_nodelist.getNodeList().get(0), nl, 2, 3);
-//		
-//		
-//				
+
+		
 //		//3d panel, not classified
 //		Plot.plot_3d(list, 0, 1, 2);
-//				
+
+		
 //		//3d panel, has been classified
 //		Plot.plot_3d_inthreecolor(nl, 0, 1, 2);
 		
 		
+		//this part is the function that connect the testing data with training data with line
 		/*
-		
 		KnnNodeList test_nodelist = new KnnNodeList();
 		test_nodelist.getNodeList().add(new_nodelist.getNodeList().get(0));
 		test_nodelist.getNodeList().add(new_nodelist.getNodeList().get(1));
 		
 		Plot.plot_2d(test_nodelist, nl, 0, 1);
 		
-		
-		
 		Plot.plot_3d(new_nodelist.getNodeList().get(0), nl, 0, 1, 2);
 		
 		Plot.plot_3d(test_nodelist, nl, 0, 1, 2);
-		
 		
 		*/
 		
@@ -154,11 +158,16 @@ public class Classifier {
 		
 		
 		
+		
+		
+		
+		
+		
 		Iterator<KnnNode> it_testingdata = new_nodelist.getNodeList().iterator();
 		
 		int number_testingdata = 0;
 		
-		System.out.println("begin to iterate the testing data");
+//		System.out.println("begin to iterate the testing data");
 		
 		while (it_testingdata.hasNext()){
 			KnnNode obj_testingdata = it_testingdata.next();
@@ -226,8 +235,10 @@ public class Classifier {
 					System.out.println("the #"+number_testingdata+" testing data node "+" is classified into "+label_list.get(i));
 				}
 			}	
-			number_testingdata++;
-			}
+			number_testingdata++;	
+			
+			System.out.println("ending");
+		}
 		
 		
 		
